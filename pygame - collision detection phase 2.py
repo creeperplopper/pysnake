@@ -3,6 +3,7 @@ import pygame, sys, random
 # initialise all pygame functions
 pygame.init()
 
+
 # Define variables for colours in (r,g,b) format
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -31,16 +32,31 @@ wBox = 10
 hBox = 10
 
 # box will move in the x and y directions each loop cycle
-xMove = 0
+xMove = wBox
 yMove = 0
 
 xApple = random.randint(0, 49) * 10
 yApple = random.randint(0, 49) * 10
 
 snake = [[xPos, yPos]]
+score = 0
+
+fonts = pygame.font.get_fonts()
+print(len(fonts))
+for f in fonts:
+    print(f)
+
+
+def draw_score():
+    padded_score = str(score).zfill(7)
+    font = pygame.font.SysFont("consolas", 24)
+    img = font.render(padded_score, True, WHITE)
+    window.blit(img, (screenWidth - (img.get_width() + 20), 20))
+
 
 # Define a variable to control whether the game loop should run
 runGame = True
+
 while runGame == True:
 
     # Check to see if there has been a key press or
@@ -99,6 +115,7 @@ while runGame == True:
     # clear the game window, then draw the red square
     # at the location xPos, tPos
     if xPos == xApple and yPos == yApple:
+        score += 100
         xApple = random.randint(0, 49) * 10
         yApple = random.randint(0, 49) * 10
         snake.append([xPos, yPos])
@@ -108,6 +125,10 @@ while runGame == True:
     for seg in snake:
         pygame.draw.rect(window, RED, (seg[0], seg[1], wBox, hBox))
 
+    score += 1
+    draw_score()
     pygame.display.update()
 
     clock.tick(speed)
+
+
