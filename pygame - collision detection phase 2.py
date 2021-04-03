@@ -40,16 +40,11 @@ yApple = random.randint(0, 49) * 10
 
 snake = [[xPos, yPos]]
 score = 0
-
-fonts = pygame.font.get_fonts()
-print(len(fonts))
-for f in fonts:
-    print(f)
+font = pygame.font.SysFont("consolas", 24)
 
 
 def draw_score():
     padded_score = str(score).zfill(7)
-    font = pygame.font.SysFont("consolas", 24)
     img = font.render(padded_score, True, WHITE)
     window.blit(img, (screenWidth - (img.get_width() + 20), 20))
 
@@ -68,22 +63,22 @@ while runGame == True:
         else:
             # Check the arrow keys for a direction change
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and xMove == 0:
                     # make xMove -ve to move left
                     xMove = -wBox
                     # no move up or down, yMove = 0
                     yMove = 0
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and yMove == 0:
                     # make yMove -ve to move up
                     yMove = -hBox
                     # no move left or right, xMove = 0
                     xMove = 0
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT and xMove == 0:
                     # make xMove +ve to move right
                     xMove = wBox
                     # no move up or down, yMove = 0
                     yMove = 0
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN and yMove == 0:
                     # make xMove +ve to move down
                     yMove = hBox
                     # no move left or right, xMove = 0
